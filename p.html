@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <style>
+        * {box-sizing: border-box}
+        body {font-family: Verdana, sans-serif; margin:0}
+        .mySlides {display: none}
+        img {vertical-align: middle;}
+        
+        /* Slideshow container */
+        .slideshow-container {
+          max-width: 1000px;
+          position: relative;
+          margin: auto;
+        }
+        
+        /* Next & previous buttons */
+        .prev, .next {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          width: auto;
+          padding: 16px;
+          margin-top: -22px;
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          transition: 0.6s ease;
+          border-radius: 0 3px 3px 0;
+          user-select: none;
+        }
+        
+        /* Position the "next button" to the right */
+        .next {
+          right: 0;
+          border-radius: 3px 0 0 3px;
+        }
+        
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+          background-color: rgba(0,0,0,0.8);
+        }
+        
+        /* Caption text */
+        .text {
+          color: #f2f2f2;
+          font-size: 15px;
+          padding: 8px 12px;
+          position: absolute;
+          bottom: 8px;
+          width: 100%;
+          text-align: center;
+        }
+        
+        /* Number text (1/3 etc) */
+        .numbertext {
+          color: #f2f2f2;
+          font-size: 12px;
+          padding: 8px 12px;
+          position: absolute;
+          top: 0;
+        }
+        
+        /* The dots/bullets/indicators */
+        .dot {
+          cursor: pointer;
+          height: 15px;
+          width: 15px;
+          margin: 0 2px;
+          background-color: #bbb;
+          border-radius: 50%;
+          display: inline-block;
+          transition: background-color 0.6s ease;
+        }
+        
+        .active, .dot:hover {
+          background-color: #717171;
+        }
+        
+        /* Fading animation */
+        .fade {
+          animation-name: fade;
+          animation-duration: 1.5s;
+        }
+        
+        @keyframes fade {
+          from {opacity: .4} 
+          to {opacity: 1}
+        }
+        
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+          .prev, .next,.text {font-size: 11px}
+        }
+
+       
+        </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position:sticky;top:0%;">
+
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">
+                <img  style="height:100px;width:100px;" src="data:image/jpeg;base64,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" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                
+              </a>
+            </div>
+          </nav>
+
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">HOME</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="dropdown">
+            <a href="contact.html"><button class="btn btn-secondary dropdown-toggle" type="button"  aria-expanded="false">
+                CONTACTUS
+              </button></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+
+          <div class="dropdown">
+           <a href="about.html"> <button class="btn btn-secondary dropdown-toggle" type="button" aria-expanded="false">
+            ABOUT US
+            </button></a>
+          </div>
+              <div class="dropdown">
+                <a href="sign in.html"><button class="btn btn-secondary dropdown-toggle" type="button"  aria-expanded="false">
+                    SIGN IN
+                  </button></a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </div>
+
+              <div class="dropdown">
+                <a href="login4.html"><button class="btn btn-secondary dropdown-toggle" type="button"  aria-expanded="false">LOGIN</button></a>
+              </div>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+
+
+
+      <div>
+        <img style="height:600px;width:100%" src="https://www.fretbox.in/assets/img/web-slider-main.png">
+      </div>
+
+
+    
+      <div class="p1" style="display:flex;border:1px solid;border-radius: 10px;border-color: aliceblue;margin-top:40px;">
+        <div>
+        <img style="height:400px;width:400px;margin-left: 30px;"src="https://www.fretbox.in/assets/img/Improves.png">
+        </div>
+        <div style="margin-left: 90px;margin-top: 30px;border:3px solid;border-radius: 10px;border-color: aqua;">
+            <ul style="font-size: 30px;">
+                <li>Rent. One of the biggest advantages of <br>opting for a PG is the rent factor, which is visibly <br>lesser than renting a home, even if you were to share<br> the space with your roommates.</li>
+                <li>Optimum social security
+                </li>
+                <li>Facilities</li>
+                <li>Lesser restrictions</li>
+              </ul>  
+        </div>
+    </div>
+
+
+
+    <div style="margin-top: 40px;background-color:#2596be ;">
+        <div style="display: flex;margin-left: 60px;">
+          <div style="height:200px;width:300px;margin-left: 200px;border:1px solid;border-radius: 10px;margin-top: 40px;">
+             <center><h1 style="color:white;">70%<br>Team Productivity</center> 
+                  
+                  </h1>
+          </div>
+          <div style="height:200px;width:300px;margin-left: 400px;border:1px solid;border-radius: 10px;margin-top: 40px;">
+          <center><h1 style="color:white;">100%<br>Digital Transformation</center>
+              
+                  </h1>
+          </div>
+          
+        </div>
+  
+        <div style="display: flex;margin-left: 60px;margin-top: 40px;">
+          <div style="height:200px;width:300px;margin-left: 200px;border:1px solid;border-radius: 10px;margin-top: 40px;">
+              <center><h1 style="margin-top: 20px;color:white">50%<br>Campus Security
+                  Assistance</center>
+                  </h1>
+          </div>
+          <div style="height:200px;width:300px;margin-left: 400px;border:1px solid;border-radius: 10px;margin-top: 40px;">
+              <center><h1 style="text-align: center;color: white;margin-top: 50px;">99.99%<br>Serving Time</center>
+                  </h1>
+          </div>
+          
+        </div>
+      </div>
+
+
+    <div style="border:1px solid;background-color: #2596be;border-radius: 10px;margin-top: 30px;height:400px;">
+       <center><h1 style="font-size: 40px;">Best Features of PG HOSTEL
+        </h1></center> 
+    <center>  <p>A Complete Solution for your Hostel/PG's Problems</center> 
+        </p>
+        <div style="display:flex;margin-left: 60px;">
+            <div>
+                <iframe width="390" height="200" src="https://www.youtube.com/embed/uDwxUDq1fuY" title="Support your residents in Emergency situations." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div  style="margin-left:90px;">
+                <iframe width="390" height="200" src="https://www.youtube.com/embed/OkNMrOSrMX4" title="Digital Notice board of Hostels" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div  style="margin-left:90px;">
+                <iframe width="390" height="200" src="https://www.youtube.com/embed/seCgSahf57Q" title="Student leave management system" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+      </div>
+
+
+
+    <center>
+        <h1 style="margin-top: 50px;color:rebeccapurple;font-size: 40px;">Our Presence in the country</h1>
+    </center>
+
+     <div style="display:flex;border:1px solid;border-radius: 10px;border-color: aliceblue;">
+
+        <div>
+            <ol style="font-size: 20px;margin-top: 30px;margin-left: 100px;border:1px solid;border-radius: 10px;border-color:white">
+                <li>Global Birla University</li><br>
+                <li>NISS</li><br>
+                <li>GITM</li><br>
+                <li>People University</li><br>
+                <li>Sage University</li><br>
+                <li>Oriental Group of Institutions</li><br>
+                <li>LNCT Group of Institutions</li><br>
+                <li>REC Banda</li><br>
+                <li>Galgotia University</li><br>
+                
+              </ol>  
+        </div>
+        <div>
+            <img style="height:600px;width:600px;margin-left: 200px;margin-top: 30px;" src="https://www.fretbox.in/assets/img/map-wo-names.png">
+        </div>
+     </div>   
+
+     <div>
+        <center>
+            <h1 style="color:aqua;font-size: 40px;">
+                HAPPY USER
+            </h1>
+        </center>
+        <center>
+            <h1 style="color:green;">
+                CUSTOMER'S REVIEW'S
+            </h1>
+        </center>
+
+        <div class="f1" style="display: flex;">
+        <div>
+        <center>
+        <img style="height:200px;width:300px;margin-top: 90px;" src="data:image/png;base64,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">
+    </center>
+        </div>
+        <div>
+             <img src="data:image/png;base64,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">
+            <p style="font-size: 20px;;">“I recently dined at [RestaurantName] and was thoroughly impressed by both the <br>exquisite cuisine and<br> the impeccable service. The menu showcased a variety of <br>innovative dishes, blending bold flavors and beautiful presentation. The attentive and knowledgeable staff ensured that our meal was a memorable one, providing excellent<br> recommendations and ensuring our satisfaction. I can’t recommend<br> [RestaurantName] enough for a fantastic dining experience.”</p>
+        </div>
+        </div>
+     </div>
+
+     <div>
+        <center><h1 style="color:aqua">SEARCH YOUR DISTINATION</h1></center>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d122538.06388313507!2d80.41422005!3d16.30686715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4a7579a4aaaca9%3A0x3c21822f6f993fc5!2sGuntur%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1710546444150!5m2!1sen!2sin" width="1600" height="450" style="border:0;margin:40px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+     </div>
+
+
+     <footer style="height:200px;width:100%;border:1px solid;background-color: black;">
+        <div style="display:flex;">
+          <div>
+        <p style="color:white;margin-top: 50px;padding-left: 20px;">
+          Terms & Conditions | Privacy Policy | Copyright Policy | Hyperlinking Policy | Accessibility |Help | Sitemap | Contact Us | Web Information Manager/CIO
+
+        </p>
+        <p style="color:white;margin-top: 50px;padding-left: 20px;">Website hosted by National Informatics Centre. Website Content provided by the President's Secretariat.</p>
+      </div>
+      <div style="margin-left: 20px;">
+
+       
+        <i class="fa-brands fa-facebook" style="color:white"></i>
+        <i class="fa-brands fa-instagram" style="color:white"></i>
+        <i class="fa-brands fa-square-youtube" style="color:white"></i>
+      </div>
+        </div>
+      </footer>
+
+    
+
+      
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
